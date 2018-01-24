@@ -11,7 +11,7 @@ task main()
 	//int addNum = 0;
 	while(true){
 		error = TARGET - SensorValue[pot];
-	//	addNum = -.001 * pastError;
+		//	addNum = -.001 * pastError;
 		motor[port1] = -0.1 * error - .005 * pastError;
 		pastError += error;
 		if(pastError > CAP){
