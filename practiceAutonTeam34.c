@@ -18,8 +18,9 @@ to code a viable auton for a bot that can onbly stack on mogos
 */
 
 float dist = (72/(4*3.14159265))*360;
-float encoderVal = 0;
-int target = 0;
+float encoderVal = 0; 
+int target = 0; //tbd after testing 
+
 void turnOnDriveMotors(){
 	motor[rightTop] = 127;
 	motor[rightBottom] = 127;
