@@ -87,7 +87,7 @@ Auton3 Plan: (for stack bonus?)
 - stack onto mogo
 ~ OR ~
 - stack onto stationary goal
-g o  f o r  t h e  g o a l (d)
+g o  f o r  t h e  g o (a) l d
 
 */
 }
