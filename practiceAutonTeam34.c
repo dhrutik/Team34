@@ -66,5 +66,28 @@ task main()
 
 	}
 
+/*
+Auton1 Plan:
+- TEST encoder to see the val we need it to go to to get to the mogo 
+- drive forward til encoder val is hit (pid necessary?)
+- TEST pot to see the val we need it to go to to lift mogo/stacl
+- TEST --^
+- lift til pot reaches chosen val (PID)
+- drive backward til encoder val is hit(or neg of it)
+- TEST encoder val needed to place mogo in x-pt zone
+- drive til mogo is over pt zone
+- lower lift til previous pot value is reached/negPotVal reached
+- drive negSecondEncoder val to orginal position // PARK
 
+Auton2 Plan: (in case alliance runs placing in 20pt zone)
+- SAME as Auton1 but in 10pt zone
+
+Auton3 Plan: (for stack bonus?)
+- same as first half of Auton1
+- stack onto mogo
+~ OR ~
+- stack onto stationary goal
+g o  f o r  t h e  g o a l (d)
+
+*/
 }
