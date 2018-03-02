@@ -11,10 +11,17 @@ task main()
 	motor[leftFront] = 0;
 	motor[leftBack] = 0;*/
 	while(true){
-		motor[rightFront] = vexRT[Ch2];
-		motor[rightBack] = vexRT[Ch2];
-		motor[leftFront] = vexRT[Ch3];
-		motor[leftBack] = vexRT[Ch3];
+		if (abs(vexRT[Ch2]) > 30 || abs(vexRT[Ch3]) > 30) {
+			motor[rightFront] = vexRT[Ch2];
+			motor[rightBack] = vexRT[Ch2];
+			motor[leftFront] = vexRT[Ch3];
+			motor[leftBack] = vexRT[Ch3];
+		} else {
+			motor[rightFront] = 0;
+			motor[rightBack] = 0;
+			motor[leftFront] = 0;
+			motor[leftBack] = 0;
+		}
 	}
 
 
