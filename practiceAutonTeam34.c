@@ -68,7 +68,7 @@ task main()
 			reverseDriveMotors();
 		}
 		turnOffDriveMotors();
-		//turn robot to place mogo in 10 pt zone
+		//turn robot to place mogo in 10 pt zone POINT TURN (wheels go in opp directions)
 		//call turn function abt 135 deg
 		// Lower mogo lift
 
