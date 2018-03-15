@@ -18,8 +18,8 @@ to code a viable auton for a bot that can onbly stack on mogos
 */
 
 float dist = (72/(4*3.14159265))*360; // encoder val when reached to destination
-float encoderVal = 0; 
-int target = 0; //tbd after testing 
+float encoderVal = 0;
+int target = 0; //tbd after testing
 
 void turnOnDriveMotors(){
 	motor[rightTop] = 127;
@@ -53,7 +53,7 @@ task main()
 
 		while(encoderVal < dist)
 		{
-			turnOnDriveMotors(); 
+			turnOnDriveMotors();
 			//drive to desired location
 		}
 		turnOffDriveMotors();
@@ -62,8 +62,7 @@ task main()
 		// lower lift need nums
 
 		motor[mogoLift] = 0.1 * error;
-		wait(
-		while(encoderVal > /*-dist*/ 0)
+		while(encoderVal > dist)
 		{
 			reverseDriveMotors();
 		}
@@ -76,7 +75,7 @@ task main()
 
 /*
 Auton1 Plan:
-- TEST encoder to see the val we need it to go to to get to the mogo 
+- TEST encoder to see the val we need it to go to to get to the mogo
 - drive forward til encoder val is hit (pid necessary?)
 - TEST pot to see the val we need it to go to to lift mogo/stacl
 - TEST --^
