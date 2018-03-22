@@ -43,7 +43,7 @@ void reverseDriveMotors(){
 	motor[leftBottom] = -102;
 }
 /*void turnAround(){
-	int turnTarget = SensorValue[drive] + (360*(9/4));
+	int turnTarget = SensorValue[drive] + (360*(11.25/4));
 	int error = turnTarget - SensorValue[drive];
 	motor[leftBottom] = 0.1 * error;
 	motor[leftTop] = 0.1 * error;
