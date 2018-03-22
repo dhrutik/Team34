@@ -47,7 +47,7 @@ task sustainMogo(){
 }
 
 task main()
-{
+{//joks
 	startTask(sustainMogo);
 	while(true){
 		/*motor[rightTop] = vexRT[Ch2];
