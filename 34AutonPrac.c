@@ -1,3 +1,17 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #pragma config(Sensor, in1,    coneLift,       sensorPotentiometer)
 #pragma config(Sensor, in2,    mogoLift,       sensorPotentiometer)
 #pragma config(Sensor, dgtl1,  drive,          sensorQuadEncoder)
