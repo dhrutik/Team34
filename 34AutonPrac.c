@@ -31,7 +31,7 @@ float distTo10Zone = 0;
 //float encoderVal = 0;
 int targetMogoLiftUp = 0;
 int targetMogoLiftDown = 0;
-float conePotVal = 0;
+float conePotVal = 0; //to be determined from testing or other groups
 // for PID if necessary
 int targetConeLiftUp = 0;
 int targetConeLiftDown = 0;
@@ -55,8 +55,14 @@ void reverseDriveMotors(){
 	motor[rightBottom] = -102;
 	motor[leftTop] = -102;
 	motor[leftBottom] = -102;
-
 }
+/*void turnAround(){
+	int turnTarget = SensorValue[drive] + (360*(11.25/4));
+	int error = turnTarget - SensorValue[drive];
+	motor[leftBottom] = 0.1 * error;
+	motor[leftTop] = 0.1 * error;
+}
+*/
 void liftMogoUp(){
 	motor[mogoRightLift] = 102;
 	motor[mogoLeftLift] = 102;
@@ -73,9 +79,7 @@ void bringMogoDown(){
 	motor[mogoRightLift] = -102;
 	motor[mogoLeftLift] = -102;
 }
-void stackConeOnMogo(){
 
-}
 
 task auton1()
 {
@@ -101,10 +105,20 @@ task auton1()
 			wait10Msec(1);
 		}
 		keepMogoUp();
+		/* 
+		* If turning after picking up mogo
+		* turnAround();
+		* Adjust value of 'distTo10Zone' if we can't do a turn in place
+		*/
 		while(SensorValue[drive] < /*>*/ distTo10Zone){ // value can be changed to suit 20 point zone
 			reverseDriveMotors();
 			wait10Msec(1);
 		}
+		/* 
+		* If turning after returning to point zone
+		* turnAround();
+		* Might have to go foreward a little
+		*/
 		while(SensorValue[mogoLift] < /*>*/ targetMogoLiftDown){
 			bringMogoDown();
 		}
@@ -113,17 +127,9 @@ task auton1()
 
 }
 
-task auton2()
-{
-	/*
-	* AUTON TO STACK CONE ON MOGO THEN GO
-	*/
-
-}
 
 
 task main()
 {
 	startTask(auton1);
-	startTask(auton2);
 }
