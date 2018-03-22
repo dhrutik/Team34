@@ -48,19 +48,17 @@ task sustainMogo(){
 
 task main()
 {
-	int leftPower = 0;
-	int rightPower = 0;
 	startTask(sustainMogo);
 	while(true){
 		/*motor[rightTop] = vexRT[Ch2];
 		motor[rightBottom] = vexRT[Ch2];
 		motor[leftTop] = vexRT[Ch3];
 		motor[leftBottom] = vexRT[Ch3];*/
-		leftPower = vexRT(Ch3);
+		int leftPower = vexRT(Ch3);
 		if(abs(leftPower) < 20) {
 			leftPower = 0;
 		}
-		rightPower = vexRT(Ch2);
+		int rightPower = vexRT(Ch2);
 		if(abs(rightPower) < 20) {
 			rightPower = 0;
 		}
