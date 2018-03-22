@@ -75,8 +75,8 @@ task main()
 		case Btn6D:
 			assignMotorSpeed(mogoRightLift,mogoLeftLift,-80);
 			break;
-		case Btn8U:
-			startTask(sustainMogo);
+		/*case Btn8U:
+			startTask(sustainMogo);*/
 		default:
 			assignMotorSpeed(mogoRightLift,mogoLeftLift,0);
 		}
