@@ -48,13 +48,24 @@ task sustainMogo(){
 
 task main()
 {
-<<<<<<< HEAD
+	int leftPower = 0;
+	int rightPower = 0;
 	startTask(sustainMogo);
 	while(true){
-		motor[rightTop] = vexRT[Ch2];
+		/*motor[rightTop] = vexRT[Ch2];
 		motor[rightBottom] = vexRT[Ch2];
 		motor[leftTop] = vexRT[Ch3];
-		motor[leftBottom] = vexRT[Ch3];
+		motor[leftBottom] = vexRT[Ch3];*/
+		leftPower = vexRT(Ch3);
+		if(abs(leftPower) < 20) {
+			leftPower = 0;
+		}
+		rightPower = vexRT(Ch2);
+		if(abs(rightPower) < 20) {
+			rightPower = 0;
+		}
+		assignMotorSpeed(rightTop,rightBottom,rightPower);
+		assignMotorSpeed(leftTop,leftBottom,leftPower);
 
 		assignMotorSpeed(mogoRightLift,mogoLeftLift,0);
 		assignMotorSpeed(coneRightLift,coneLeftLift,0);
@@ -84,49 +95,49 @@ task main()
 		}
 
 		/*
-=======
-while(true){
-	int leftPower = vexRT(Ch3);
-	if(abs(leftPower) < 20) {
+		=======
+		while(true){
+		int leftPower = vexRT(Ch3);
+		if(abs(leftPower) < 20) {
 		leftPower = 0;
-	}
-	int rightPower = vexRT(Ch2);
-	if(abs(rightPower) < 20) {
+		}
+		int rightPower = vexRT(Ch2);
+		if(abs(rightPower) < 20) {
 		rightPower = 0;
-	}
-	motor[leftTop] = leftPower;
-	motor[leftBottom] = leftPower;
-	motor[rightTop] = rightPower;
-	motor[rightBottom] = rightPower;
+		}
+		motor[leftTop] = leftPower;
+		motor[leftBottom] = leftPower;
+		motor[rightTop] = rightPower;
+		motor[rightBottom] = rightPower;
 
-	motor[mogoRightLift] = 0;
-	motor[mogoLeftLift] = 0;
-	motor[coneRightLift] = 0;
-	motor[coneRightLift] = 0;
+		motor[mogoRightLift] = 0;
+		motor[mogoLeftLift] = 0;
+		motor[coneRightLift] = 0;
+		motor[coneRightLift] = 0;
 
-	if(vexRT[Btn6U]){
+		if(vexRT[Btn6U]){
 		motor[mogoRightLift] = 80;
 		motor[mogoLeftLift] = 80;
-	}
-	else if(vexRT[Btn6D]){
+		}
+		else if(vexRT[Btn6D]){
 		motor[mogoRightLift] = -80;
 		motor[mogoLeftLift] = -80;
-	}
+		}
 
-	if(vexRT[Btn5U]){
+		if(vexRT[Btn5U]){
 		motor[coneRightLift] = 90;
 		motor[coneLeftLift] = 90;
-	}
-	else if(vexRT[Btn5D]){
+		}
+		else if(vexRT[Btn5D]){
 		motor[coneRightLift] = -90;
 		motor[coneLeftLift] = -90;
-	}
-	if(vexRT[Btn8U]){
+		}
+		if(vexRT[Btn8U]){
 		motor[mogoRightLift] = 50;
 		motor[mogoLeftLift] = 50;
-	}
-	else if(vexRT[Btn8R]){
->>>>>>> 1a3f643c9f2e7ac46d7b7797b233ae1d37f3932c
+		}
+		else if(vexRT[Btn8R]){
+		>>>>>>> 1a3f643c9f2e7ac46d7b7797b233ae1d37f3932c
 		motor[mogoRightLift] = 0;
 		motor[mogoRightLift] = 0;
 		motor[mogoConeLift] = 0;
