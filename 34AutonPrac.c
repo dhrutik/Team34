@@ -91,10 +91,20 @@ task auton1()
 			wait10Msec(1);
 		}
 		keepMogoUp();
+		/* 
+		* If turning after picking up mogo
+		* turnAround();
+		* Adjust value of 'distTo10Zone' if we can't do a turn in place
+		*/
 		while(SensorValue[drive] < /*>*/ distTo10Zone){ // value can be changed to suit 20 point zone
 			reverseDriveMotors();
 			wait10Msec(1);
 		}
+		/* 
+		* If turning after returning to point zone
+		* turnAround();
+		* Might have to go foreward a little
+		*/
 		while(SensorValue[mogoLift] < /*>*/ targetMogoLiftDown){
 			bringMogoDown();
 		}
