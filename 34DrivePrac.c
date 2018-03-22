@@ -11,10 +11,18 @@
 task main()
 {
 while(true){
-	motor[rightTop] = vexRT[Ch2];
-	motor[rightBottom] = vexRT[Ch2];
-	motor[leftTop] = vexRT[Ch3];
-	motor[leftBottom] = vexRT[Ch3];
+	int leftPower = vexRT(Ch3);
+	if(abs(leftPower) < 20) {
+		leftPower = 0;
+	}
+	int rightPower = vexRT(Ch2);
+	if(abs(rightPower) < 20) {
+		rightPower = 0;
+	}
+	motor[leftTop] = leftPower;
+	motor[leftBottom] = leftPower;
+	motor[rightTop] = rightPower;
+	motor[rightBottom] = rightPower;
 
 	motor[mogoRightLift] = 0;
 	motor[mogoLeftLift] = 0;
