@@ -48,13 +48,26 @@ task sustainMogo(){
 
 task main()
 {
-<<<<<<< HEAD
 	startTask(sustainMogo);
-	while(true){
+	while (true) {
 		motor[rightTop] = vexRT[Ch2];
+=======
+	while(true){
+		/*motor[rightTop] = vexRT[Ch2];
+>>>>>>> 2e0c0434ec96bef4882846e537378c00df12d523
 		motor[rightBottom] = vexRT[Ch2];
 		motor[leftTop] = vexRT[Ch3];
-		motor[leftBottom] = vexRT[Ch3];
+		motor[leftBottom] = vexRT[Ch3];*/
+		int leftPower = vexRT(Ch3);
+		if(abs(leftPower) < 20) {
+			leftPower = 0;
+		}
+		int rightPower = vexRT(Ch2);
+		if(abs(rightPower) < 20) {
+			rightPower = 0;
+		}
+		assignMotorSpeed(rightTop,rightBottom,rightPower);
+		assignMotorSpeed(leftTop,leftBottom,leftPower);
 
 		assignMotorSpeed(mogoRightLift,mogoLeftLift,0);
 		assignMotorSpeed(coneRightLift,coneLeftLift,0);
@@ -66,8 +79,8 @@ task main()
 		case Btn6D:
 			assignMotorSpeed(mogoRightLift,mogoLeftLift,-80);
 			break;
-		case Btn8U:
-			startTask(sustainMogo);
+		/*case Btn8U:
+			startTask(sustainMogo);*/
 		default:
 			assignMotorSpeed(mogoRightLift,mogoLeftLift,0);
 		}
@@ -83,81 +96,94 @@ task main()
 			assignMotorSpeed(coneRightLift,coneLeftLift,0);
 		}
 
-		/*
+	/*
 =======
-while(true){
-	int leftPower = vexRT(Ch3);
-	if(abs(leftPower) < 20) {
+	while(true){
+		int leftPower = vexRT(Ch3);
+		if(abs(leftPower) < 20) {
+			leftPower = 0;
+		}
+		int rightPower = vexRT(Ch2);
+		if(abs(rightPower) < 20) {
+			leftPower = 0;
+=======
+		/*
+		=======
+		while(true){
+		int leftPower = vexRT(Ch3);
+		if(abs(leftPower) < 20) {
 		leftPower = 0;
-	}
-	int rightPower = vexRT(Ch2);
-	if(abs(rightPower) < 20) {
+>>>>>>> 2e0c0434ec96bef4882846e537378c00df12d523
+		}
+		int rightPower = vexRT(Ch2);
+		if(abs(rightPower) < 20) {
 		rightPower = 0;
-	}
-	motor[leftTop] = leftPower;
-	motor[leftBottom] = leftPower;
-	motor[rightTop] = rightPower;
-	motor[rightBottom] = rightPower;
+		}
+		motor[leftTop] = leftPower;
+		motor[leftBottom] = leftPower;
+		motor[rightTop] = rightPower;
+		motor[rightBottom] = rightPower;
 
-	motor[mogoRightLift] = 0;
-	motor[mogoLeftLift] = 0;
-	motor[coneRightLift] = 0;
-	motor[coneRightLift] = 0;
-
-	if(vexRT[Btn6U]){
-		motor[mogoRightLift] = 80;
-		motor[mogoLeftLift] = 80;
-	}
-	else if(vexRT[Btn6D]){
-		motor[mogoRightLift] = -80;
-		motor[mogoLeftLift] = -80;
-	}
-
-	if(vexRT[Btn5U]){
-		motor[coneRightLift] = 90;
-		motor[coneLeftLift] = 90;
-	}
-	else if(vexRT[Btn5D]){
-		motor[coneRightLift] = -90;
-		motor[coneLeftLift] = -90;
-	}
-	if(vexRT[Btn8U]){
-		motor[mogoRightLift] = 50;
-		motor[mogoLeftLift] = 50;
-	}
-	else if(vexRT[Btn8R]){
->>>>>>> 1a3f643c9f2e7ac46d7b7797b233ae1d37f3932c
 		motor[mogoRightLift] = 0;
-		motor[mogoRightLift] = 0;
-		motor[mogoConeLift] = 0;
-		motor[mogoConeLift] = 0;
+		motor[mogoLeftLift] = 0;
+		motor[coneRightLift] = 0;
+		motor[coneRightLift] = 0;
 
 		if(vexRT[Btn6U]){
-		assignMotorSpeed(mogoRightLift,mogoLeftLift,80);
+		motor[mogoRightLift] = 80;
+		motor[mogoLeftLift] = 80;
 		}
 		else if(vexRT[Btn6D]){
-		assignMotorSpeed(mogoRightLift,mogoLeftLift,-80);
+		motor[mogoRightLift] = -80;
+		motor[mogoLeftLift] = -80;
 		}
 
 		if(vexRT[Btn5U]){
-		assignMotorSpeed(coneRightLift,coneLeftLift,90);
+		motor[coneRightLift] = 90;
+		motor[coneLeftLift] = 90;
 		}
 		else if(vexRT[Btn5D]){
-		assignMotorSpeed(coneRightLift,coneLeftLift,-90);
+		motor[coneRightLift] = -90;
+		motor[coneLeftLift] = -90;
 		}
 		if(vexRT[Btn8U]){
-		assignMotorSpeed(mogoRightLift,mogoLeftLift,50);
+		motor[mogoRightLift] = 50;
+		motor[mogoLeftLift] = 50;
 		}
 		else if(vexRT[Btn8R]){
-		assignMotorSpeed(mogoRightLift,mogoLeftLift,0);
-		}
-		if(vexRT[Btn7U]){
-		assignMotorSpeed(coneRightLift,coneLeftLift,40);
-		}
-		else if(vexRT[Btn7L]){
-		assignMotorSpeed(coneRightLift,coneLeftLift,0);
-		}*/
+		>>>>>>> 1a3f643c9f2e7ac46d7b7797b233ae1d37f3932c
+		motor[mogoRightLift] = 0;
+		motor[mogoRightLift] = 0;
+		motor[mogoConeLift] = 0;
+		motor[mogoConeLift] = 0;
+>>>>>>> 2e0c0434ec96bef4882846e537378c00df12d523
 
-	}
+				if(vexRT[Btn6U]){
+					assignMotorSpeed(mogoRightLift,mogoLeftLift,80);
+				}
+				else if(vexRT[Btn6D]){
+					assignMotorSpeed(mogoRightLift,mogoLeftLift,-80);
+				}
 
-}
+				if(vexRT[Btn5U]){
+					assignMotorSpeed(coneRightLift,coneLeftLift,90);
+				}
+				else if(vexRT[Btn5D]){
+					assignMotorSpeed(coneRightLift,coneLeftLift,-90);
+				}
+				if(vexRT[Btn8U]){
+					assignMotorSpeed(mogoRightLift,mogoLeftLift,50);
+				}
+				else if(vexRT[Btn8R]){
+					assignMotorSpeed(mogoRightLift,mogoLeftLift,0);
+				}
+				if(vexRT[Btn7U]){
+					assignMotorSpeed(coneRightLift,coneLeftLift,40);
+				}
+				else if(vexRT[Btn7L]){
+					assignMotorSpeed(coneRightLift,coneLeftLift,0);
+				}*/
+
+			}
+
+		}
