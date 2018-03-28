@@ -26,7 +26,7 @@
 //Main competition background code...do not modify!
 #include "Vex_Competition_Includes.c"
 
-float distToMogo = 0;
+float distToMogo = 1200; //72in divided by 4pi in. wheel revolutions of 360 deg
 float distTo10Zone = 0;
 //float distTo20Zone = 0;
 //float encoderVal = 0;
@@ -37,11 +37,6 @@ float conePotVal = 0; //to be determined from testing or other groups
 int targetConeLiftUp = 0;
 int targetConeLiftDown = 0;
 //int targetDrive = 0;
-
-void assignMotorSpeed (tMotor motor1, tMotor motor2, int speed){
-	motor[motor1] = speed;
-	motor[motor2] = speed;
-}
 
 // .8*127 = 101.6 ~~ 102
 void turnOnDriveMotors(){
@@ -62,16 +57,16 @@ void reverseDriveMotors(){
 	motor[leftTop] = -102;
 	motor[leftBottom] = -102;
 }
-/*void turnAround(){
-int turnTarget = SensorValue[drive] + (360*(11.25/4));
-int error = turnTarget - SensorValue[drive];
-motor[leftBottom] = 0.1 * error;
-motor[leftTop] = 0.1 * error;
+void turnAround(){
+	int turnTarget = SensorValue[drive] + (360*(11.25/4));
+	int error = turnTarget - SensorValue[drive];
+	motor[leftBottom] = 0.1 * error;
+	motor[leftTop] = 0.1 * error;
 }
-*/
 void liftMogoUp(){
 	motor[mogoRightLift] = 102;
 	motor[mogoLeftLift] = 102;
+	wait1Msec(1500);
 }
 /*void stopMogoMotors(){
 motor[mogoRightLift] = 0;
@@ -84,12 +79,19 @@ void keepMogoUp(){
 void bringMogoDown(){
 	motor[mogoRightLift] = -102;
 	motor[mogoLeftLift] = -102;
+	wait1Msec(1500);
+}
+
+
+void assignMotorSpeed (tMotor motor1, tMotor motor2, int speed){
+	motor[motor1] = speed;
+	motor[motor2] = speed;
 }
 
 bool btnNumMogo = false;
 bool btnNumCone = false;
-bool btnTap = false;
-bool turnOnMotors = false;
+
+float currVal = SensorValue[drive];
 
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
@@ -111,6 +113,17 @@ void pre_auton()
 	SensorValue[coneLift] = 0;
 	SensorValue[mogoLift] = 0;
 	SensorValue[drive] = 0;
+
+	/* distToMogo = 1200; //72in divided by 4pi in. wheel revolutions of 360 deg
+	float distTo10Zone = 0;
+	//float distTo20Zone = 0;
+	//float encoderVal = 0;
+	int targetMogoLiftUp = 0;
+	int targetMogoLiftDown = 0;
+	float conePotVal = 0; //to be determined from testing or other groups
+	// for PID if necessary
+	int targetConeLiftUp = 0;
+	int targetConeLiftDown = 0;*/
 }
 
 /*---------------------------------------------------------------------------*/
@@ -123,26 +136,30 @@ void pre_auton()
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
+//int targetDrive = 0;
+
+// .8*127 = 101.6 ~~ 10
+
 task autonomous()
 {
 	while(true){
+		bringMogoDown();
 		while(SensorValue[drive] < distToMogo){
 			turnOnDriveMotors();
-			wait10Msec(1);
+//wait1Msec(20);
 		}
 		turnOffDriveMotors();
-		wait10Msec(1);
-		while(SensorValue[mogoLift] < targetMogoLiftUp){
-			liftMogoUp();
-			wait10Msec(1);
-		}
+		wait1Msec(5);
+		liftMogoUp();
+		wait1Msec(5000);
 		keepMogoUp();
+		wait1Msec(5000);
 		/*
-		* If turning after picking up mogo
-		* turnAround();
-		* Adjust value of 'distTo10Zone' if we can't do a turn in place
+		* If turning after picking up mogo*/
+		turnAround();
+		/*Adjust value of 'distTo10Zone' if we can't do a turn in place
 		*/
-		while(SensorValue[drive] < /*>*/ distTo10Zone){ // value can be changed to suit 20 point zone
+		while(SensorValue[drive] > 400){ // value can be changed to suit 20 point zone
 			reverseDriveMotors();
 			wait10Msec(1);
 		}
@@ -151,9 +168,8 @@ task autonomous()
 		* turnAround();
 		* Might have to go foreward a little
 		*/
-		while(SensorValue[mogoLift] < /*>*/ targetMogoLiftDown){
-			bringMogoDown();
-		}
+		bringMogoDown();
+
 	}
 }
 
@@ -166,49 +182,16 @@ task autonomous()
 /*                                                                           */
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
-task sustainMogo(){
-	while(true){
-		/*if(vexRT[Btn8U]){
-		count = 1;
-		}
-		while(count%2 == 1){
-		assignMotorSpeed(mogoRightLift,mogoLeftLift,50);
-		count++;
-		}*/
-		if(vexRT[Btn8U]){
-			if(!btnTap){ //not of false is true
-				turnOnMotors = !turnOnMotors;
-				btnTap = true;
-			}
-			else{
-				btnTap = false;
-				turnOnMotors = false;
-			}
-		}
-		if(turnOnMotors){
-			assignMotorSpeed(mogoRightLift,mogoLeftLift,50);
-		}
-		else{
-			assignMotorSpeed(mogoRightLift,mogoLeftLift,0);
-		}
-	}
-}
+
 
 task usercontrol()
 {
-	// User control code here, inside the loop
-	startTask(sustainMogo);
-	while (true)
-	{
-		/*motor[rightTop] = vexRT[Ch2];
-		motor[rightBottom] = vexRT[Ch2];
-		motor[leftTop] = vexRT[Ch3];
-		motor[leftBottom] = vexRT[Ch3];*/
-		int leftPower = vexRT(Ch3);
+	while(true){
+		int leftPower = vexRT(Ch3)*.8;
 		if(abs(leftPower) < 20) {
 			leftPower = 0;
 		}
-		int rightPower = vexRT(Ch2);
+		int rightPower = vexRT(Ch2)*.8;
 		if(abs(rightPower) < 20) {
 			rightPower = 0;
 		}
@@ -218,103 +201,28 @@ task usercontrol()
 		assignMotorSpeed(mogoRightLift,mogoLeftLift,0);
 		assignMotorSpeed(coneRightLift,coneLeftLift,0);
 
-		switch(vexRT[btnNumMogo]){
-		case Btn6U:
+		/*(vexRT[Btn7D]) {
+		startTask(auton);
+		}
+		stopTask(auton);*/
+
+		if(vexRT[Btn6U]){
+
 			assignMotorSpeed(mogoRightLift,mogoLeftLift,80);
-			break;
-		case Btn6D:
+		}
+		else if(vexRT[Btn6D]){
 			assignMotorSpeed(mogoRightLift,mogoLeftLift,-80);
-			break;
-			/*case Btn8U:
-			startTask(sustainMogo);*/
-		default:
-			assignMotorSpeed(mogoRightLift,mogoLeftLift,0);
 		}
 
-		switch(vexRT[btnNumCone]){
-		case Btn5U:
+		if(vexRT[Btn5U]){
 			assignMotorSpeed(coneRightLift,coneLeftLift,90);
-			break;
-		case Btn5D:
+		}
+		else if(vexRT[Btn5D]){
 			assignMotorSpeed(coneRightLift,coneLeftLift,-90);
-			break;
-		default:
-			assignMotorSpeed(coneRightLift,coneLeftLift,0);
 		}
 
-		/*
-		=======
-		while(true){
-		int leftPower = vexRT(Ch3);
-		if(abs(leftPower) < 20) {
-		leftPower = 0;
-		}
-		int rightPower = vexRT(Ch2);
-		if(abs(rightPower) < 20) {
-		rightPower = 0;
-		}
-		motor[leftTop] = leftPower;
-		motor[leftBottom] = leftPower;
-		motor[rightTop] = rightPower;
-		motor[rightBottom] = rightPower;
-
-		motor[mogoRightLift] = 0;
-		motor[mogoLeftLift] = 0;
-		motor[coneRightLift] = 0;
-		motor[coneRightLift] = 0;
-
-		if(vexRT[Btn6U]){
-		motor[mogoRightLift] = 80;
-		motor[mogoLeftLift] = 80;
-		}
-		else if(vexRT[Btn6D]){
-		motor[mogoRightLift] = -80;
-		motor[mogoLeftLift] = -80;
-		}
-
-		if(vexRT[Btn5U]){
-		motor[coneRightLift] = 90;
-		motor[coneLeftLift] = 90;
-		}
-		else if(vexRT[Btn5D]){
-		motor[coneRightLift] = -90;
-		motor[coneLeftLift] = -90;
-		}
-		if(vexRT[Btn8U]){
-		motor[mogoRightLift] = 50;
-		motor[mogoLeftLift] = 50;
-		}
-		else if(vexRT[Btn8R]){
-		>>>>>>> 1a3f643c9f2e7ac46d7b7797b233ae1d37f3932c
-		motor[mogoRightLift] = 0;
-		motor[mogoRightLift] = 0;
-		motor[mogoConeLift] = 0;
-		motor[mogoConeLift] = 0;
-
-		if(vexRT[Btn6U]){
-		assignMotorSpeed(mogoRightLift,mogoLeftLift,80);
-		}
-		else if(vexRT[Btn6D]){
-		assignMotorSpeed(mogoRightLift,mogoLeftLift,-80);
-		}
-
-		if(vexRT[Btn5U]){
-		assignMotorSpeed(coneRightLift,coneLeftLift,90);
-		}
-		else if(vexRT[Btn5D]){
-		assignMotorSpeed(coneRightLift,coneLeftLift,-90);
-		}
-		if(vexRT[Btn8U]){
-		assignMotorSpeed(mogoRightLift,mogoLeftLift,50);
-		}
-		else if(vexRT[Btn8R]){
-		assignMotorSpeed(mogoRightLift,mogoLeftLift,0);
-		}
-		if(vexRT[Btn7U]){
-		assignMotorSpeed(coneRightLift,coneLeftLift,40);
-		}
-		else if(vexRT[Btn7L]){
-		assignMotorSpeed(coneRightLift,coneLeftLift,0);
-		}*/
 	}
+
+
+
 }
