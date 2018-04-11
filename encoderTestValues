@@ -1,0 +1,60 @@
+#pragma config(Sensor, in1,    coneLift,       sensorPotentiometer)
+#pragma config(Sensor, in2,    mogoLift,       sensorPotentiometer)
+#pragma config(Sensor, dgtl3,  drive,          sensorQuadEncoder)
+#pragma config(Motor,  port2,           leftTop,       tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port3,           rightBottom,   tmotorVex393_MC29, openLoop, reversed)
+#pragma config(Motor,  port4,           leftBottom,    tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port5,           rightTop,      tmotorVex393_MC29, openLoop, reversed)
+#pragma config(Motor,  port6,           mogoRightLift, tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port7,           mogoLeftLift,  tmotorVex393_MC29, openLoop, reversed)
+#pragma config(Motor,  port8,           coneRightLift, tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port9,           coneLeftLift,  tmotorVex393_MC29, openLoop, reversed)
+
+float target = 817; //1230
+float driveVal = 0;
+void turnOnDriveMotors(){
+	motor[rightTop] = 102;
+	motor[rightBottom] = 102;
+	motor[leftTop] = 102;
+	motor[leftBottom] = 102;
+}
+void turnOffDriveMotors(){
+	motor[rightTop] = 0;
+	motor[rightBottom] = 0;
+	motor[leftTop] = 0;
+	motor[leftBottom] = 0;
+}
+void reverseDriveMotors(){
+	motor[rightTop] = -102;
+	motor[rightBottom] = -102;
+	motor[leftTop] = -102;
+	motor[leftBottom] = -102;
+}
+
+void powerMotors(tMotor x, tMotor y, int power){
+	motor[x] = power;
+	motor[y] = power;
+}
+task main()
+{
+	while(true){
+		while(SensorValue[driveVal] < target){
+			
+			turnOnDriveMotors();
+			driveVal = SensorValue[drive];
+		}
+	wait1Msec(50);
+		//reverseDriveMotors();
+		//writeDebugStreamLine("Encoder's current value is: %f", target);
+		for (int i = 0; i<15; i++){
+			powerMotors(mogoLeftLift,mogoRightLift, 50);
+			wait1Msec(2);
+		}
+		/*powerMotors(mogoLeftLift,mogoRightLift, 80);
+		wait1Msec(10);*/
+		powerMotors(mogoLeftLift,mogoRightLift,0);
+	//	reverseDriveMotors();
+
+	}
+
+}
