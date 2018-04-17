@@ -10,7 +10,8 @@
 #pragma config(Motor,  port8,           coneRightLift, tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port9,           coneLeftLift,  tmotorVex393_MC29, openLoop, reversed)
 
-float target = 817; //1230
+float targetMogo =  1200;//817; 1230
+float targetBack = 0;
 float driveVal = 0;
 void turnOnDriveMotors(){
 	motor[rightTop] = 102;
@@ -38,21 +39,37 @@ void powerMotors(tMotor x, tMotor y, int power){
 task main()
 {
 	while(true){
-		while(SensorValue[driveVal] < target){
-			
-			turnOnDriveMotors();
+		while(driveVal/*SensorValue[drive]*/ < targetMogo){
+			powerMotors(leftTop,leftBottom,80);
+			powerMotors(rightTop,rightBottom,80);
 			driveVal = SensorValue[drive];
 		}
+wait1Msec(20);
+	turnOffDriveMotors();
+	powerMotors(mogoLeftLift,mogoRightLift, 30);
+			wait1Msec(200);
+	
+/*	while(driveVal > targetBack){
+		powerMotors(leftTop,leftBottom,-80);
+		powerMotors(rightTop,rightBottom,-80);
+		driveVal = SensorValue[drive];
+	}
 	wait1Msec(50);
-		//reverseDriveMotors();
-		//writeDebugStreamLine("Encoder's current value is: %f", target);
-		for (int i = 0; i<15; i++){
+	turnOffDriveMotors();*/
+	/*	//reverseDriveMotors();
+		//writeDebugStreamLine("Encoder's current value is: %f", targetMogo);
+	//	for (int i = 0; i<15; i++){
+		int timePassed = 1;
+	//while (timePassed < 16){
 			powerMotors(mogoLeftLift,mogoRightLift, 50);
-			wait1Msec(2);
-		}
+			wait1Msec(200);
+		//	timePassed++;
+//	}
+
+	//	}
 		/*powerMotors(mogoLeftLift,mogoRightLift, 80);
 		wait1Msec(10);*/
-		powerMotors(mogoLeftLift,mogoRightLift,0);
+		//powerMotors(mogoLeftLift,mogoRightLift,0);
 	//	reverseDriveMotors();
 
 	}
